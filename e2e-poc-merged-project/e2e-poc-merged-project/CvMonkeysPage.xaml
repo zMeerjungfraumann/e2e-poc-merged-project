@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:e2e_poc_merged_project"
+             x:Class="e2e_poc_merged_project.CvMonkeysPage"
+             Title="CvMonkeysPage">
+    <ContentPage.BindingContext>
+        <local:MonkeysViewModel />
+    </ContentPage.BindingContext>
+
+    <VerticalStackLayout Spacing="25" BackgroundColor="LightGrey">
+        <CarouselView 
+            ItemsSource="{Binding Monkeys}" 
+            x:Name="cvMonkeys" 
+            AutomationId="cvMonkeysID" 
+            IsVisible="True" 
+            HorizontalScrollBarVisibility="Always"
+            VerticalScrollBarVisibility="Never"
+            BackgroundColor="Grey"
+            HeightRequest="500">
+            <CarouselView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout>
+                        <Frame HasShadow="True"
+                                BorderColor="DarkGray"
+                                CornerRadius="5"
+                                Margin="20"
+                                HeightRequest="300"
+                                HorizontalOptions="Center"
+                                VerticalOptions="CenterAndExpand">
+                            <StackLayout>
+                                <Label Text="{Binding Name}"
+                                        FontAttributes="Bold"
+                                        FontSize="18"
+                                        HorizontalOptions="Center"
+                                        VerticalOptions="Center" />
+                                <Image Source="{Binding ImageUrl}"
+                                        Aspect="AspectFill"
+                                        HeightRequest="150"
+                                        WidthRequest="150"
+                                        HorizontalOptions="Center" />
+                                <Label Text="{Binding Location}"
+                                        HorizontalOptions="Center" />
+                                <Label Text="{Binding Details}"
+                                        FontAttributes="Italic"
+                                        HorizontalOptions="Center"
+                                        MaxLines="5"
+                                        LineBreakMode="TailTruncation" />
+                            </StackLayout>
+                        </Frame>
+                    </StackLayout>
+                </DataTemplate>
+            </CarouselView.ItemTemplate>
+        </CarouselView>
+    </VerticalStackLayout>
+</ContentPage>

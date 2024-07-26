@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.Build.NoTargets/3.7.0">
+    
+  <PropertyGroup>
+    <TargetFrameworks>net8.0</TargetFrameworks>
+    <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
+    <GenerateMSBuildEditorConfigFile>False</GenerateMSBuildEditorConfigFile>
+    <RootNamespace>UITests</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+	<Content Include="**\*.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="NewFile1.txt" />
+  </ItemGroup>
+
+</Project>

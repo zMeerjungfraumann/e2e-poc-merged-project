@@ -1,0 +1,73 @@
+name: Run Appium Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+
+    - name: Install Appium
+      run: |
+        npm install -g appium
+        npm install -g appium-doctor
+
+    - name: Install Appium Windows Driver And Android Driver
+      run: |
+        appium driver install --source=npm appium-windows-driver
+        appium driver install --source=npm appium-uiautomator2-driver
+
+    - name: Set up latest Java
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'adopt'
+        java-version: '22'
+
+    - name: Install Android SDK
+      run: |
+        choco install -y android-sdk
+        choco install -y android-sdk-build-tools
+        choco install -y android-sdk-platform-tools
+        choco install -y android-ndk
+    
+    - name: Install Android Emulator System Image
+      run: |
+        cmd.exe /c "C:\\Program Files (x86)\\Android\\android-sdk\\cmdline-tools\\11.0\\bin\\sdkmanager.bat" "system-images;android-33;google_apis;x86_64"
+
+    - name: Create Android Virtual Device (AVD)
+      run: |
+        cmd.exe /c "C:\\Program Files (x86)\\Android\\android-sdk\\cmdline-tools\\11.0\\bin\\avdmanager.bat" create avd -n pixel_5_-_api_33 -k "system-images;android-33;google_apis;x86_64" --device "pixel_5"
+
+    - name: Download and install WinAppDriver
+      run: |
+        Invoke-WebRequest -Uri "https://github.com/microsoft/WinAppDriver/releases/tag/v1.2.1/WindowsApplicationDriver_1.2.1.msi" -OutFile C:\Temp\WindowsApplicationDriver.msi
+        Start-Process msiexec.exe -ArgumentList '/i C:\Temp\WindowsApplicationDriver.msi /quiet /norestart INSTALLLOCATION="C:\Program Files (x86)\Windows Application Driver"' -Wait
+
+    - name: Move project to desired directory
+      run: |
+        mkdir -p "C:\\HTL\\Diplomarbeit\\e2e-poc-merged-project"
+        mv ./* "C:\\HTL\\Diplomarbeit\\e2e-poc-merged-project/"
+
+    - name: Build project
+      run: |
+        dotnet build C:\\HTL\\Diplomarbeit\\e2e-poc-merged-project\\e2e-poc-merged-project.sln
+      working-directory: C:\\HTL\\Diplomarbeit\\e2e-poc-merged-project
+
+    - name: Run tests
+      run: |
+        dotnet test C:\\HTL\\Diplomarbeit\\e2e-poc-merged-project\\e2e-poc-merged-project.sln --logger "trx;LogFileName=test_results.trx"
+      working-directory: C:\\HTL\\Diplomarbeit\\e2e-poc-merged-project

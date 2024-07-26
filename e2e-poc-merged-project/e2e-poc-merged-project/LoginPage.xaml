@@ -1,0 +1,191 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:e2e_poc_merged_project"
+             x:Class="e2e_poc_merged_project.LoginPage">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="30,0"
+            Spacing="25">
+
+            <!--**************Menu**************-->
+            <Label
+                x:Name="lblMenu"
+                Text="Hello this is the menu, you can either log in or register!"
+                Style="{StaticResource Headline}"
+                SemanticProperties.HeadingLevel="Level1" 
+                IsVisible="true"
+            />
+
+            <Button
+                x:Name="btStartLogin"
+                Text="Start Login" 
+                SemanticProperties.Hint="Starts the login process"
+                Clicked="showLogin"
+                HorizontalOptions="Fill" 
+                IsVisible="true"
+                AutomationId="btStartLoginID"
+            />
+
+            <Button
+                x:Name="btStartRegister"
+                Text="Start Registration" 
+                SemanticProperties.Hint="Starts the registration process"
+                Clicked="showRegister"
+                HorizontalOptions="Fill" 
+                IsVisible="true"
+                AutomationId="btStartRegisterID"
+            />
+            <!--****************************-->
+
+            <!--**************Registration**************-->
+            <Label
+                x:Name="lblRegister"
+                Text="Welcome to the Registration!"
+                Style="{StaticResource Headline}"
+                SemanticProperties.HeadingLevel="Level1" 
+                IsVisible="false"
+            />
+
+            <Label
+                x:Name="lblUsernameReg"
+                Text="Username:"
+                IsVisible="false"
+            />
+
+            <Entry
+                x:Name="txtfUsernameReg"
+                SemanticProperties.Hint="TextField for the Username"
+                HorizontalOptions="Fill"
+                Placeholder="Max"
+                IsVisible="false"
+                AutomationId="txtfUsernameRegID"
+            />
+
+            <Label
+                x:Name="lblEmailReg"
+                Text="Email:"
+                IsVisible="false"
+            />
+
+            <Entry
+                 x:Name="txtfEmailReg"
+                 SemanticProperties.Hint="TextField for the email adress"
+                 HorizontalOptions="Fill"
+                 Placeholder="max.mustermann@gmx.at"
+                 IsVisible="false"
+                 AutomationId="txtfEmailRegID"
+            />
+
+            <Label
+                x:Name="lblPasswordReg"
+                Text="Password:"
+                IsVisible="false"
+            />
+
+            <Entry
+                 x:Name="txtfPasswordReg"
+                 SemanticProperties.Hint="TextField for the password"
+                 HorizontalOptions="Fill"
+                 Placeholder="Password"
+                 IsVisible="false"
+                 AutomationId="txtfPasswordRegID"
+                 Text="{Binding Password}"
+                 IsPassword="true"
+    
+            />
+
+            <Button
+                x:Name="btRegister"
+                Text="Register" 
+                SemanticProperties.Hint="Registers the user"
+                Clicked="startRegister"
+                HorizontalOptions="Fill" 
+                IsVisible="false"
+                AutomationId="btRegisterID"
+            />
+
+            <Label
+                x:Name="lblRegisterInfo"
+                Text=""
+                IsVisible="false"
+                AutomationId="lblRegisterInfoID"
+            />
+            <!--****************************-->
+
+            <!--**************Login**************-->
+            <Label
+                x:Name="lblLogin"
+                Text="Welcome to the Login!"
+                Style="{StaticResource Headline}"
+                SemanticProperties.HeadingLevel="Level1" 
+                IsVisible="false"
+            />
+
+            <Label
+                x:Name="lblUsername"
+                Text="Username:"
+                IsVisible="false"
+            />
+
+            <Entry
+                x:Name="txtfUsername"
+                SemanticProperties.Hint="TextField for the Username"
+                HorizontalOptions="Fill"
+                Placeholder="Max"
+                IsVisible="false"
+                AutomationId="txtfUsernameID"
+            />
+
+            <Label
+                x:Name="lblPassword"
+                Text="Password:"
+                IsVisible="false"
+            />
+
+            <Entry
+                 x:Name="txtfPassword"
+                 SemanticProperties.Hint="TextField for the password"
+                 HorizontalOptions="Fill"
+                 Placeholder="Password"
+                 IsVisible="false"
+                 AutomationId="txtfPasswordID"
+                 Text="{Binding Password}"
+                 IsPassword="true"
+    
+            />
+
+            <Button
+                x:Name="btLogin"
+                Text="Login" 
+                SemanticProperties.Hint="Tries to log the user in"
+                Clicked="startLogin"
+                HorizontalOptions="Fill" 
+                IsVisible="false"
+                AutomationId="btLoginID"
+            />
+
+            <Label
+                x:Name="lblLoginInformation"
+                Text=" "
+                IsVisible="True"
+                AutomationId="lblLoginInformationID"
+
+            />
+            <!--****************************-->
+
+            <Button
+                x:Name="btBack"
+                Text="Back" 
+                SemanticProperties.Hint="Goes back to the main menu"
+                Clicked="showMenu"
+                HorizontalOptions="End"
+                VerticalOptions="End"
+                IsVisible="false"
+                AutomationId="btBackID"
+            />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

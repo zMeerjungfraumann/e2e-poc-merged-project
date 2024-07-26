@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="e2e_poc_merged_project.LoggedInPage"
+             Title="LoggedInPage"
+             AutomationId="LoggedInPageID">
+    <VerticalStackLayout
+        Spacing="25">
+
+        <Button
+            x:Name="btShowMonkeys"
+            Text="Show Monkeys" 
+            SemanticProperties.Hint="Shows monkeys"
+            Clicked="showMonkeys"
+            HorizontalOptions="Fill" 
+            IsVisible="true"
+            AutomationId="btShowMonkeysID"
+        />
+
+        <Button
+            x:Name="btShowCbSlider"
+            Text="Show Cb and Slider" 
+            SemanticProperties.Hint="Shows Checkbox and Slider"
+            Clicked="showCbSlider"
+            HorizontalOptions="Fill" 
+            IsVisible="true"
+            AutomationId="btShowCbSliderID"
+        />
+
+        <Button
+            x:Name="btShowLVCustomElement"
+            Text="Show Lv and Custom Element" 
+            SemanticProperties.Hint="Shows ListView and Custom Element"
+            Clicked="showLVCustomElement"
+            HorizontalOptions="Fill" 
+            IsVisible="true"
+            AutomationId="btShowLVCustomElementID"
+        />
+
+        <Button
+            x:Name="btShowCombobox"
+            Text="Show Combobox" 
+            SemanticProperties.Hint="Shows Combobox"
+            Clicked="showComboBox"
+            HorizontalOptions="Fill" 
+            IsVisible="true"
+            AutomationId="btShowComboboxID"
+        />
+
+    </VerticalStackLayout>
+</ContentPage>

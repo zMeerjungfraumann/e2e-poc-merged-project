@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="e2e_poc_merged_project.CbSliderPage"
+             Title="CbSliderPage">
+    <VerticalStackLayout>
+        
+        <Slider
+            x:Name="sl_slider"
+            Maximum="100"
+            AutomationId="sl_slider"/>
+
+        <CheckBox
+            x:Name="ch_Check"
+            AutomationId="ch_Check"
+            IsChecked="False"
+            IsVisible="True"
+            CheckedChanged="OnCheckBoxChanged"/>
+
+        <Button
+            x:Name="btn_Disabled"
+            AutomationId="btn_Disabled"
+            IsEnabled="False"
+            Text="Click me" 
+            SemanticProperties.Hint="Der Button ist disabled"
+            HorizontalOptions="Center" />  
+
+    </VerticalStackLayout>
+</ContentPage>

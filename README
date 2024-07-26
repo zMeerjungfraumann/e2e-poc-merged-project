@@ -1,0 +1,16 @@
+Benötigte Komponenten für die E2E - Testumgebung
+
+Beschreibung					Befehl/ Webseite
+
+Windows Application Driver			https://github.com/Microsoft/WinAppDriver/releases
+Appium Server					npm i --location=global appium
+Treiber						appium driver install --source=npm appium-windows-driver
+        					appium driver install --source=npm appium-uiautomator2-driver
+Android SDK					choco install -y android-sdk
+      						choco install -y android-sdk-build-tools
+      						choco install -y android-sdk-platform-tools
+      						choco install -y android-ndk
+Android Emulator System Image			cmd.exe /c "C:\Program Files (x86)\Android\android-sdk\cmdline-tools\11.0\bin\sdkmanager.bat" "system-images;android-33;google_apis;x86_64"
+Create Android Virtual Device			cmd.exe /c "C:\Program Files (x86)\Android\android-sdk\cmdline-tools\11.0\bin\avdmanager.bat" create avd -n emulator-5554 -k "system-images;android-33;google_apis;x86_64" --device "pixel_5"
+
+Appium Documentation: 				http://appium.io/docs/en/latest/
