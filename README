@@ -14,3 +14,40 @@ Android Emulator System Image			cmd.exe /c "C:\Program Files (x86)\Android\andro
 Create Android Virtual Device			cmd.exe /c "C:\Program Files (x86)\Android\android-sdk\cmdline-tools\11.0\bin\avdmanager.bat" create avd -n emulator-5554 -k "system-images;android-33;google_apis;x86_64" --device "pixel_5"
 
 Appium Documentation: 				http://appium.io/docs/en/latest/
+
+    GILT NUR FÜR ANDROID:
+
+	DEBUG BUILD
+
+		Im Debug-Build wird die Anwendung mit zusätzlichen Debug-Informationen und Werkzeugen kompiliert, die es einfacher machen, 
+		Probleme während der Entwicklung zu diagnostizieren. Für Android-Anwendungen ist im Debug-Build oft die Schnellbereitstellung (Fast Deployment) 
+		aktiviert. Fast Deployment ermöglicht kürzere Iterationszeiten, indem nur die geänderten Teile der Anwendung und nicht das gesamte APK bereitgestellt 
+		werden. Dies kann jedoch mit Tools wie Appium in Konflikt geraten, die möglicherweise nicht mit den zusätzlichen Dateien und Konfigurationen umgehen können, 
+		die für Fast Deployment verwendet werden.
+
+		Um Appium-Tests gegen einen Debug-Build auszuführen, muss "NoReset" auf "true" gesetz werden (Verhindert, dass Appium notwendige Bibliotheken löscht) und AppPackage und AppActivity
+		müssen angegeben werden.
+
+		Brauchbare Codelines:
+
+		androidOptions.AddAdditionalAppiumOption(MobileCapabilityType.NoReset, "true");
+		androidOptions.AddAdditionalAppiumOption(AndroidMobileCapabilityType.AppPackage, "com.companyname.basicappiumsample");
+
+		//Stellen Sie sicher, dass Sie [Register("com.companyname.basicappiumsample.MainActivity")] auf die MainActivity Ihrer Android Applikation setzen
+		androidOptions.AddAdditionalAppiumOption(AndroidMobileCapabilityType.AppActivity, $"com.companyname.basicappiumsample.MainActivity");
+
+	
+	RELEASE BUILD
+
+		Im Release-Build ist die Anwendung für Leistung optimiert und enthält keine Debug-Informationen oder -Werkzeuge. Fast Deployment ist in der Regel deaktiviert, 
+		was zu einer stabileren und vorhersehbareren Testumgebung führt. Appium ist mit Release-Builds besser kompatibel, da es mit dem vollständig gepackten APK ohne 
+		die Komplexitäten interagiert, die durch Fast Deployment entstehen.
+
+		Beim Einrichten von Appium zur Prüfung eines Release-Builds wird der vollständige Pfad zur signierten APK-Datei angegeben.
+
+
+
+Anmerkungen zum Workflow:
+    -Beim Ausführen des "dotnet test" - Commands, werden alle Android- und Windows-Tests ausgeführt. Bei der Ausgabe der Testergebnisse ist die Unterteilung zwischen Windows- und Android-Tests leicht überschaubar, 
+     deshalb ist genaues daraufachten empfohlen: Die Windows-Tests werden erfolgreich ausgeführt, doch die Android-Tests schlagen fehl, da der Emulator nicht startet. Beim lokalen Ausführen der Tests sollten Windows- und 
+     Android-Tests erfolgreich verlaufen.

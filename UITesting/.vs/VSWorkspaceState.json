@@ -1,7 +1,8 @@
 {
   "ExpandedNodes": [
     "",
-    "\\UITests.Android"
+    "\\UITests.Android",
+    "\\UITests.Windows"
   ],
   "SelectedNode": "\\UITests.Android\\AppiumSetup.cs",
   "PreviewInSolutionExplorer": false

@@ -27,17 +27,13 @@ public class AppiumSetup
             PlatformName = "Android",
             DeviceName = "emulator-5554",
             //DeviceName = "RF8NA18GT4M",
-            //App = @""+ directoryPath + @"\e2e-poc-merged-project\e2e-poc-merged-project\bin\Release\net8.0-android\com.companyname.e2epocmergedproject-Signed.apk",
-            App = @"C:\HTL\Diplomarbeit\e2e-poc-merged-project\e2e-poc-merged-project\e2e-poc-merged-project\bin\Release\net8.0-android\com.companyname.e2epocmergedproject-Signed.apk",
+            App = @""+ directoryPath + @"\e2e-poc-merged-project\e2e-poc-merged-project\bin\Release\net8.0-android\com.companyname.e2epocmergedproject-Signed.apk",
         };
 
         StartEmulator();
         driver = new AndroidDriver(androidOptions);
 
-        Console.WriteLine("Directory AppiumSetup Android: " + AppDomain.CurrentDomain.BaseDirectory+ "------");
-        Console.WriteLine("Directory AppiumSetup Android: " + Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent.Parent.Parent.FullName + "------");
-
-
+        
     }
 
     [OneTimeTearDown]

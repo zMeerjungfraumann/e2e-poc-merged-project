@@ -14,7 +14,7 @@ namespace UITests
     {
         protected AppiumDriver App => AppiumSetup.App;
 
-        // This could also be an extension method to AppiumDriver if you prefer
+        //Returns a AppiumElement. The search parameters are different for windows and android
         protected AppiumElement FindUIElement(string id)
         {
             Task.Delay(300).Wait();
@@ -44,7 +44,7 @@ namespace UITests
             }
         }
 
-
+        //Clicks on the generated back button. Unfortunately it only has a AutomationID on Windows. To click it on Android it searches with XPath, but it throws exception. So the exceptions must be ignored. 
         protected void GoBack()
         {
 

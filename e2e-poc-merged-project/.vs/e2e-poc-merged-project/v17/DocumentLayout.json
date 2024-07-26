@@ -32,9 +32,10 @@
               "RelativeDocumentMoniker": "e2e-poc-merged-project\\e2e-poc-merged-project.csproj",
               "ToolTip": "C:\\HTL\\Diplomarbeit\\e2e-poc-merged-project\\e2e-poc-merged-project\\e2e-poc-merged-project\\e2e-poc-merged-project.csproj",
               "RelativeToolTip": "e2e-poc-merged-project\\e2e-poc-merged-project.csproj",
-              "ViewState": "AQIAABgAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "ViewState": "AQIAABgAAAAAAAAAAAAAACEAAAACAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2024-07-25T11:03:28.147Z"
+              "WhenOpened": "2024-07-25T11:03:28.147Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -44,7 +45,7 @@
               "RelativeDocumentMoniker": "e2e-poc-merged-project-nunit-tests\\Tests.cs",
               "ToolTip": "C:\\HTL\\Diplomarbeit\\e2e-poc-merged-project\\e2e-poc-merged-project\\e2e-poc-merged-project-nunit-tests\\Tests.cs",
               "RelativeToolTip": "e2e-poc-merged-project-nunit-tests\\Tests.cs",
-              "ViewState": "AQIAADUBAAAAAAAAAAA4wE8BAAARAAAA",
+              "ViewState": "AQIAAHMAAAAAAAAAAAAgwIAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-25T11:03:24.929Z",
               "EditorCaption": ""
