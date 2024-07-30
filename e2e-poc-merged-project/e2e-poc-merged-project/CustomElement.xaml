@@ -7,7 +7,8 @@
         <Label Text="Button was not clicked yet" 
                x:Name="customtext"
                HorizontalOptions="Center" 
-               VerticalOptions="CenterAndExpand" />
+               VerticalOptions="CenterAndExpand" 
+               AutomationId="customLabel"/>
         <Button Text="Click Me!" 
                 HorizontalOptions="Center" 
                 Clicked="onClick"

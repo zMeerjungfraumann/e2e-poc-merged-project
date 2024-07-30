@@ -6,6 +6,6 @@ public partial class PickerPage : ContentPage
 	{
 		InitializeComponent();
         BindingContext = new MonthsViewModel();
-
+       
     }
 }

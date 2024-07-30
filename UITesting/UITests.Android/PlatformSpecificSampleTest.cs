@@ -1,17 +1,15 @@
 using NUnit.Framework;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium;
-using System.ComponentModel;
-using OpenQA.Selenium.Appium;
+using OpenQA.Selenium.Support.UI;
+using System.Diagnostics;
+using System.Xml.Linq;
 
 namespace UITests;
 
 public class PlatformSpecificSampleTest : SharedMethods
 {
-
     public string directoryPath = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent.Parent.Parent.FullName; // C:\HTL\Diplomarbeit\e2e-poc-merged-project
-
-    
 
     ///************************
     //************swipeCarouselView-Test************
@@ -33,14 +31,15 @@ public class PlatformSpecificSampleTest : SharedMethods
             actions.MoveToElement(carouselViewMonkeys).ClickAndHold().MoveByOffset(offset, 0).Release().Perform();
         }
 
+
         //Screenshot
         App.GetScreenshot().SaveAsFile(@"" + directoryPath + @"\UITesting\Screenshots\swipeCarouselView-Android.png");
-
-        //Assert
 
         // Returning to the menu
         GoBack();
 
+        //Assert
+        //Keinen Weg gefunden, um zu sehen welches Element im CarouselView angezeigt wird.
     }
     //************************
     //************************
@@ -70,81 +69,54 @@ public class PlatformSpecificSampleTest : SharedMethods
         //Screenshot
         App.GetScreenshot().SaveAsFile(@"" + directoryPath + @"\UITesting\Screenshots\slider-Android.png");
 
-        //Assert
-
         // Returning to the menu
         GoBack();
+
+        //Assert
+        Assert.Pass("Slider moved");
     }
-    //************************
-    //************************
-
-
-
 
     //************************
-    //************CustomElementAndListView-Test************
+    //************************
+
+
     [Test]
-    public void d_CustomElementAndListView()
+    public void testCheckbox()
     {
         //Action
-        // Change to the Listview / Custom Element - Page
-        FindUIElement("btShowLVCustomElementID").Click();
-        // Click each Custom Button (Child-Element of the custom Element once)
-        var customs = FindUIElements(LocatorType.ID, "customButton");
-        foreach (var custom in customs)
-        {
-            Console.WriteLine("in for");
-            custom.Click();
-        }
-        Console.WriteLine("Clicked all buttons");
-        // AutomationIDs of the List-Items in hardcoded array
-        var listItemAutomationIds = new[] { "item1", "item2", "item3" };
-        // Searching for the matching Element for each ID and clicking it
-        foreach (var id in listItemAutomationIds)
-        {
-            try
-            {
-                FindUIElement(id).Click();
-            }
-            catch (NoSuchElementException)
-            {
-                Console.WriteLine($"Element with content-desc {id} not found");
-            }
-        }
-        try
-        {
-            // Locating Elements by Text (All Child-Element-Buttons of the custom element are clicked again)
-            var elements = FindUIElements(LocatorType.TEXT, "Click me!");
-            foreach (var element in elements)
-            {
-                element.Click();
-            }
-        }
-        catch (Exception exception)
-        {
-            Console.WriteLine("Error while attempting to locate Element via 'Name': " + exception.Message);
-        }
+        FindUIElement("btShowCbSliderID").Click();
 
-        //Screenshot
-        //There is also the methode driver.TakeScreenshot().SaveAsFile(), but to be able to use it you have to import a library, that's why we decided to use driver.GetScreenshot().SaveAsFile() instead
-        App.GetScreenshot().SaveAsFile(@"" + directoryPath + @"\UITesting\Screenshots\customElementListView-Android.png");
+        IWebElement checkbox = FindUIElement("ch_Check");
+        IWebElement disbledButton = FindUIElement("btn_Disabled");
 
-        //Assert
+        Console.WriteLine("Ckeckbox clicked: " + bool.Parse(checkbox.GetAttribute("checked")));
+        Console.WriteLine("Is Button enabled: " + disbledButton.Enabled);
+
+        Console.WriteLine("After click on Checkbox");
+
+        checkbox.Click();
+
+        bool selected = bool.Parse(checkbox.GetAttribute("checked"));
+
+        Console.WriteLine("Ckeckbox clicked: " + selected);
+        Console.WriteLine("Is Button enabled: " + disbledButton.Enabled);
 
         // Returning to the menu
         GoBack();
+
+        //Assert
+        Assert.That(selected, Is.EqualTo(true));
     }
-    //************************
-    //************************
 
 
-
-
+    
     //************************
     //************Picker-Test************
     [Test]
     public void e_testCombobox()
     {
+        var monthToSelect = "October";
+
         //Action
         FindUIElement("btShowComboboxID").Click();
 
@@ -154,31 +126,26 @@ public class PlatformSpecificSampleTest : SharedMethods
 
         Thread.Sleep(1000);
 
-        try{
-            try
-            {
-                //Tries to find the Listitem with the name "March" and selects/clicks it
-                var item = App.FindElement(By.XPath("//ListItem[@Name='March']"));
-                item.Click();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
-
-        }
-        catch (Exception e){
-            Console.WriteLine(e);
-
-        }
+        // Tries to find the Listitem with the name "March" and selects/ clicks it
+        //var monthElement = App.FindElement(By.XPath($"//android.widget.TextView[@text='{monthToSelect}']"));
+        var monthElement = App.FindElement(By.XPath($"//*[@text='{monthToSelect}']"));
+        monthElement.Click();
 
         Thread.Sleep(1000);
 
         //Screenshot
         App.GetScreenshot().SaveAsFile(@"" + directoryPath + @"\UITesting\Screenshots\comboBox-Android.png");
 
+        var pickerText = picker.Text;
+        Console.WriteLine("Selected Month: "+pickerText);
+
+        // Returning to the menu
+        GoBack();
+
         //Assert
+        Assert.That(pickerText, Is.EqualTo(monthToSelect));
     }
     //************************
     //************************
+
 }

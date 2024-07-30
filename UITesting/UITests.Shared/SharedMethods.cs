@@ -33,13 +33,16 @@ namespace UITests
 
         protected IReadOnlyCollection<AppiumElement> FindUIElements(LocatorType locatorType, String locatorValue)
         {
+            Task.Delay(300).Wait();
             switch (locatorType) {
                 case LocatorType.ID: 
-                    Task.Delay(300).Wait();
                     return (App is WindowsDriver) ?     App.FindElements(MobileBy.AccessibilityId(locatorValue))
                         :                               App.FindElements(MobileBy.Id(locatorValue));
                 case LocatorType.TEXT:
-                    return App.FindElements(By.XPath($"//*[@text='{locatorValue}']"));
+                    return App.FindElements(By.XPath($"//*[@text='{locatorValue}']"));      // Only works for Android
+
+                //var monthElement = App.FindElements(By.XPath($"//android.widget.TextView[@text='{monthToSelect}']"));
+
                 default: throw new Exception($"Invalid locatorType '{locatorType}'");
             }
         }

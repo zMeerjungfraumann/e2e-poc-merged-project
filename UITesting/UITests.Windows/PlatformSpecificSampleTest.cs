@@ -22,6 +22,7 @@ public class PlatformSpecificSampleTest : SharedMethods
         //Clicks the PageDown-Button 3 times
         for (int i = 0; i < 3; i++)
         {
+            //Die clickAndHold Action geht auf Windows nicht, da sonst eine Exception geworfen wird
             carouselViewMonkeys.SendKeys(Keys.PageDown);
             Thread.Sleep(300);
         }
@@ -31,10 +32,11 @@ public class PlatformSpecificSampleTest : SharedMethods
         //Screenshot
         App.GetScreenshot().SaveAsFile(@"" + directoryPath + @"\UITesting\Screenshots\swipeCarouselView-Windows.png");
 
-        //Assert
-
         // Returning to the menu
         FindUIElement("NavigationViewBackButton").Click();
+
+        //Assert
+        //Keinen Weg gefunden, um zu sehen welches Element im CarouselView angezeigt wird.
 
     }
     //************************
@@ -56,88 +58,53 @@ public class PlatformSpecificSampleTest : SharedMethods
         //Actions does not work on windows
         for (int i = 0; i < 5; i++) // 5% of the slider
         {
+            //Die clickAndHold Action geht auf Windows nicht, da sonst eine Exception geworfen wird
             slider.SendKeys(Keys.ArrowRight);
         }
 
         //Screenshot
         App.GetScreenshot().SaveAsFile(@"" + directoryPath + @"\UITesting\Screenshots\slider-Windows.png");
 
+        // Returning to the menu
+        GoBack();
+
         //Assert
+    }
+    //************************
+    //************************
+
+    [Test]
+    public void testCheckbox()
+    {
+        FindUIElement("btShowCbSliderID").Click();
+
+        IWebElement checkbox = FindUIElement("ch_Check");
+        IWebElement disbledButton = FindUIElement("btn_Disabled");
+
+        Console.WriteLine("Ckeckbox clicked: " + checkbox.Selected);
+        Console.WriteLine("Is Button enabled: " + disbledButton.Enabled);
+
+        Console.WriteLine("After click on Checkbox");
+
+        checkbox.Click();
+
+        Console.WriteLine("Ckeckbox clicked: " + checkbox.Selected);
+        Console.WriteLine("Is Button enabled: " + disbledButton.Enabled);
 
         // Returning to the menu
         GoBack();
-    }
-    //************************
-    //************************
-
-
-
-
-    //************************
-    //************CustomElementAndListView-Test************
-    [Test]
-    public void d_CustomElementAndListView()
-    {
-        //Action
-        // Change to the Listview / Custom Element - Page
-        FindUIElement("btShowLVCustomElementID").Click();
-        // Click each Custom Button (Child-Element of the custom Element once)
-        var customs = FindUIElements(LocatorType.ID,"customButton");
-
-        foreach (var custom in customs)
-        {
-            Console.WriteLine("in for");
-            custom.Click();
-        }
-        Console.WriteLine("Clicked all buttons");
-        // AutomationIDs of the List-Items in hardcoded array
-        var listItemAutomationIds = new[] { "item1", "item2", "item3" };
-        // Searching for the matching Element for each ID and clicking it
-        foreach (var id in listItemAutomationIds)
-        {
-            try
-            {
-                FindUIElement(id).Click();
-            }
-            catch (NoSuchElementException)
-            {
-                Console.WriteLine($"Element with content-desc {id} not found");
-            }
-        }
-        try
-        {
-            // Locating Elements by Text (All Child-Element-Buttons of the custom element are clicked again)
-            var elements = FindUIElements(LocatorType.TEXT, "Click me!");
-            foreach (var element in elements)
-            {
-                element.Click();
-            }
-        }
-        catch (Exception exception)
-        {
-            Console.WriteLine("Error while attempting to locate Element via 'Name': " + exception.Message);
-        }
-
-        //Screenshot
-        App.GetScreenshot().SaveAsFile(@"" + directoryPath + @"\UITesting\Screenshots\customElementListView-Windows.png");
 
         //Assert
-
-
-        //Returning to the menu
-        GoBack();
+        Assert.That(checkbox.Selected, Is.EqualTo(true));
     }
-    //************************
-    //************************
-
-
-
 
     //************************
     //************Picker-Test************
     [Test]
     public void e_testCombobox()
     {
+        var monthToSelect = "December";
+
         //Action
         FindUIElement("btShowComboboxID").Click();
         Thread.Sleep(1000);
@@ -148,11 +115,8 @@ public class PlatformSpecificSampleTest : SharedMethods
 
         Thread.Sleep(1000);
 
-        Console.WriteLine("In Windows");
-
-        //var item = App.FindElement(By.XPath("//ListItem[@Name='March']"));
         //Tries to find the Listitem with the name "December" and selects/clicks it
-        var item = App.FindElement(MobileBy.Name("December"));
+        var item = App.FindElement(MobileBy.Name(monthToSelect));
         item.Click();
 
         Thread.Sleep(1000);
@@ -160,7 +124,14 @@ public class PlatformSpecificSampleTest : SharedMethods
         //Screenshot
         App.GetScreenshot().SaveAsFile(@"" + directoryPath + @"\UITesting\Screenshots\comboBox-Windows.png");
 
+        var pickerText = picker.Text;
+        Console.WriteLine("Selected Month: " + pickerText);
+
+        //Returning to the menu
+        GoBack();
+
         //Assert
+        Assert.That(pickerText, Is.EqualTo(monthToSelect));
     }
     //************************
     //************************

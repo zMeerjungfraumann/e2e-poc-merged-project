@@ -19,27 +19,6 @@ public class MainPageTests : SharedMethods
 
     public string directoryPath = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent.Parent.Parent.FullName; // C:\HTL\Diplomarbeit\e2e-poc-merged-project
 
-    /*
-	
-	[Test]
-	public void ClickCounterTest()
-	{
-		// Arrange
-		// Find elements with the value of the AutomationId property
-		var element = FindUIElement("CounterBtn");
-
-		// Act
-		element.Click();
-		Task.Delay(500).Wait(); // Wait for the click to register and show up on the screenshot
-
-		// Assert
-		App.GetScreenshot().SaveAsFile($"{nameof(ClickCounterTest)}.png");
-		Assert.That(element.Text, Is.EqualTo("Clicked 1 time"));
-	}*/
-
-
-
-
     //************************
     //************Login-Test************
     [Test]
@@ -96,87 +75,74 @@ public class MainPageTests : SharedMethods
     //************************
     //************************
 
-    [Test]
-    public void testCheckbox ()
-    {
-        FindUIElement("btShowCbSliderID").Click();
-
-        IWebElement checkbox = FindUIElement("ch_Check");
-        IWebElement disbledButton = FindUIElement("btn_Disabled");
-
-        Console.WriteLine("Ckeckbox clicked: " + checkbox.Selected);
-        Console.WriteLine("Is Button enabled: " + disbledButton.Enabled);
-
-        Console.WriteLine("After click on Checkbox");
-
-        checkbox.Click();
-
-        Console.WriteLine("Ckeckbox clicked: " + checkbox.Selected);
-        Console.WriteLine("Is Button enabled: " + disbledButton.Enabled);
-
-        //HIER
-
-        GoBack();
-    }
-
-
-
 
 
     //************************
-    //************Picker-Test************
-    /*
+    //************CustomElementAndListView-Test************
     [Test]
-    public void e_testCombobox()
+    public void testCustomElement()
     {
-        findElementByAutomationID("btShowComboboxID").Click();
+        //Action
+        // Change to the Listview / Custom Element - Page
+        FindUIElement("btShowLVCustomElementID").Click();
+        // Click each Custom Button (Child-Element of the custom Element once)
+        var customs = FindUIElements(LocatorType.ID, "customButton");
 
-        var picker = findElementByAutomationID("MonthPickerID");
-        picker.Click();
-
-        Thread.Sleep(1000);
-
-        if (platform.Equals("Windows"))
+        foreach (var custom in customs)
         {
-            Console.WriteLine("In Windows");
-
-            var item = driver.FindElement(By.XPath("//ListItem[@Name='March']"));
-            item.Click();
+            Console.WriteLine("in for");
+            custom.Click();
         }
-        else if (platform.Equals("Android"))
+        Console.WriteLine("Clicked all buttons");
+        
+            // Locating Elements by Text (All Child-Element-Buttons of the custom element are clicked again)
+            // Does not work at the moment for some unknown reason (did work in the past)
+        Console.WriteLine("Ist im try");
+        
+        var elements = FindUIElements(LocatorType.TEXT, "Click Me!");
+        foreach (var element in elements)
+        {
+            Console.WriteLine("Ist in der Schleife");
+            element.Click();
+        }
+
+        Console.WriteLine("Ist nach der Schleife");
+        
+        //Screenshot
+        App.GetScreenshot().SaveAsFile(@"" + directoryPath + @"\UITesting\Screenshots\customElementListView-Windows.png");
+
+        // Check If all Labels were updated correctly, then assert
+        var customLabels = FindUIElements(LocatorType.ID, "customLabel");
+        var match = true;
+        foreach (var customLabel in customLabels)
+        {
+            match = match && (customLabel.Text.Equals("Button Clicked"));
+        }
+        //Returning to the menu
+        GoBack();
+        //Assert
+        Assert.That(match, Is.EqualTo(true));
+    }
+    [Test]
+    public void testListView()
+    {
+        FindUIElement("btShowLVCustomElementID").Click();
+        // AutomationIDs of the List-Items in hardcoded array
+        var listItemAutomationIds = new[] { "item1", "item2", "item3" };
+        // Searching for the matching Element for each ID and clicking it
+        foreach (var id in listItemAutomationIds)
         {
             try
             {
-                Console.WriteLine("In Android try");
-
-                var item = driver.FindElement(By.XPath("//ListItem[@Name='March']"));
-                item.Click();
+                FindUIElement(id).Click();
             }
-            catch (Exception e)
+            catch (NoSuchElementException)
             {
-                Console.WriteLine(e);
-
+                Console.WriteLine($"Element with content-desc {id} not found");
             }
-
         }
-
-
-        Thread.Sleep(1000);
-
-
-    }
-    //************************
-    //************************
-    */
-
-
-
-    private ReadOnlyCollection<AppiumElement> FindElementsbyAutomationId(string automationId)
-    {
-        Task.Delay(135).Wait();
-        return
-            (App is WindowsDriver) ? App.FindElements(By.XPath($"//*[@AutomationId='{automationId}']"))
-            : (App is AndroidDriver) ? App.FindElements(By.Id(automationId))
-            : throw new Exception($"Invalid platform detected: {App.GetType}");
+        //Returning to the menu
+        GoBack();
+        Assert.Pass("Listview Items successfully clicked");
     }
 }
